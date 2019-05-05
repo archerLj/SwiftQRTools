@@ -16,7 +16,7 @@ public protocol SwiftQRScanControllerDelegate {
     func scan(controller: SwiftQRScanController, result: String)
 }
 
-extension SwiftQRScanControllerDelegate {
+public extension SwiftQRScanControllerDelegate {
     func scan(scanViewIn superView: UIView) -> SwiftQRScanView {
         let scanView = SwiftQRScanView(frame: superView.bounds)
         return scanView

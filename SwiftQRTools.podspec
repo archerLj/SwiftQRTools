@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name         = "SwiftQRTools"
-  spec.version      = "0.1"
+  spec.version      = "0.2"
   spec.summary      = "Scan QR、Generate QR Code and read QR Code info from image."
   spec.description  = <<-DESC
 		Scan QR、Generate QR Code and read QR Code info from image.
