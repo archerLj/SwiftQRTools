@@ -3,8 +3,8 @@ Scan QR、Generate QR Code image and Read QR Code from image
 
 <img src="https://raw.githubusercontent.com/archerLj/SwiftQRTools/master/pics/scanPage.PNG" width= "200"/><img src="https://raw.githubusercontent.com/archerLj/SwiftQRTools/master/pics/qrPage.PNG" width= "200"/>
 
-### Usage
-##### 1. Scan QR
+# Usage
+### 1. Scan QR
 SwiftQRTools provide a `SwiftQRScanController` and a default view `SwiftQRScanView` shows in above picture. You can use yourself view just inherit `SwiftQRScanView`. And there's some usefull delegate methods in `SwiftQRScanControllerDelegate`. Here's an example:
 ```
 class ViewController: UIViewController {
@@ -46,7 +46,7 @@ extension ViewController: SwiftQRScanControllerDelegate {
 }
 ```
 
-##### 2. Generate QR Code
+### 2. Generate QR Code
 
 ```
 let image = SwiftQRUtils.generateQRCode(with: "123", tintColor: UIColor.black, imageScale: 10, centerImage: UIImage(named: "top"), centerImageSize: CGSize(width: 40, height: 40)) 
@@ -56,7 +56,7 @@ or just
 let image = SwiftQRUtils.generateQRCode(with: "123") 
 ```
 
-##### 2. Read QR Code info from image
+### 2. Read QR Code info from image
 
 ```
 let image = UIImage(named: "test")
@@ -65,13 +65,13 @@ print("info is : \(result)")
 ```
 
 
-### Installation
+# Installation
 SimpleQR is available through CocoaPods. To install it, simply add the following line to your Podfile:
 ```
 pod 'SwiftQRTools'
 ```
 
-### License
+# License
 <br/>
 SwiftQRUtils is released under the MIT license. <a href="https://github.com/archerLj/SwiftQRTools/blob/master/LICENSE">See LICENSE</a> for details.
 
