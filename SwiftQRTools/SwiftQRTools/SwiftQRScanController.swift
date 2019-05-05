@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-protocol SwiftQRScanControllerDelegate {
+public protocol SwiftQRScanControllerDelegate {
     func scan(scanViewIn superView: UIView) -> SwiftQRScanView
     func scanViewConfig() -> SwiftQRScanViewConfig
     func scanMetadataObjectTypes() -> [AVMetadataObject.ObjectType]
@@ -31,7 +31,7 @@ extension SwiftQRScanControllerDelegate {
     }
 }
 
-class SwiftQRScanController: UIViewController {
+public class SwiftQRScanController: UIViewController {
     
     /// - static
     static let sDefaultInterestWidth: CGFloat = 200
@@ -53,14 +53,14 @@ class SwiftQRScanController: UIViewController {
     
     
     /// - Methods
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         sessionSetup()
         interestRectConfig()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         if let _ = self.delegate {
@@ -167,7 +167,7 @@ class SwiftQRScanController: UIViewController {
 }
 
 extension SwiftQRScanController: AVCaptureMetadataOutputObjectsDelegate {
-    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+    public func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         
         // metadataObjects contains all the metadata objects that have been read.
         // Check if the metadataObjects is not nil and it contains at last one object.

@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct SwiftQRScanViewConfig {
+public struct SwiftQRScanViewConfig {
     // color of other areas except interest rect
     let colorExceptInterestRect: UIColor
     // the rect width to detect QR Code
@@ -23,7 +23,7 @@ struct SwiftQRScanViewConfig {
     let InterestRectCornerLineWidth: CGFloat
 }
 
-class SwiftQRScanView: UIView {
+public class SwiftQRScanView: UIView {
     
     /// - Properties
     public var viewConfig: SwiftQRScanViewConfig!
@@ -56,7 +56,7 @@ class SwiftQRScanView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
 
         let x = (self.bounds.width - self.viewConfig.interstRectWidth)/2.0 + 2.0
@@ -84,7 +84,7 @@ class SwiftQRScanView: UIView {
     
     
     /// - draw
-    override func draw(_ rect: CGRect) {
+    public override func draw(_ rect: CGRect) {
         
         /// - Properties
         let lineLen = self.viewConfig.InterestRectCornerLineLength
