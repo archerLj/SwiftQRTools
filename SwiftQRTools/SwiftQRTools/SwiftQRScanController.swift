@@ -10,23 +10,23 @@ import UIKit
 import AVFoundation
 
 public protocol SwiftQRScanControllerDelegate {
-    func scan(scanViewIn superView: UIView) -> SwiftQRScanView
-    func scanViewConfig() -> SwiftQRScanViewConfig
-    func scanMetadataObjectTypes() -> [AVMetadataObject.ObjectType]
-    func scan(controller: SwiftQRScanController, result: String)
+    func scanView(_ for: SwiftQRScanController, in superView: UIView) -> SwiftQRScanView
+    func scanViewConfigure(_ for: SwiftQRScanController) -> SwiftQRScanViewConfig
+    func scanMetadataObjectTypes(_ for: SwiftQRScanController) -> [AVMetadataObject.ObjectType]
+    func scanController(_ controller: SwiftQRScanController, didFinishScanWithInfo info: String)
 }
 
 public extension SwiftQRScanControllerDelegate {
-    func scan(scanViewIn superView: UIView) -> SwiftQRScanView {
+    func scanView(_ for: SwiftQRScanController, in superView: UIView) -> SwiftQRScanView {
         let scanView = SwiftQRScanView(frame: superView.bounds)
         return scanView
     }
     
-    func scanViewConfig() -> SwiftQRScanViewConfig {
+    func scanViewConfigure(_ for: SwiftQRScanController) -> SwiftQRScanViewConfig {
         return SwiftQRScanController.sDefaultQRScanViewConfig
     }
     
-    func scanMetadataObjectTypes()  -> [AVMetadataObject.ObjectType] {
+    func scanMetadataObjectTypes(_ for: SwiftQRScanController) -> [AVMetadataObject.ObjectType] {
         return [.qr]
     }
 }
@@ -64,8 +64,8 @@ public class SwiftQRScanController: UIViewController {
         super.viewWillAppear(animated)
         
         if let _ = self.delegate {
-            let scanView = self.delegate!.scan(scanViewIn: self.view)
-            scanView.viewConfig = self.delegate!.scanViewConfig()
+            let scanView = self.delegate!.scanView(self, in: self.view)
+            scanView.viewConfig = self.delegate!.scanViewConfigure(self)
             scanView.tag = 999
             
             self.view.viewWithTag(999)?.removeFromSuperview()
@@ -96,8 +96,8 @@ public class SwiftQRScanController: UIViewController {
                     var interestH = SwiftQRScanController.sDefaultInterestHeight
                     
                     if let _ = self.delegate {
-                        interestW = self.delegate!.scanViewConfig().interstRectWidth
-                        interestH = self.delegate!.scanViewConfig().interstRectHeight
+                        interestW = self.delegate!.scanViewConfigure(self).interstRectWidth
+                        interestH = self.delegate!.scanViewConfigure(self).interstRectHeight
                     }
                     
                     self.captureMetadataOutput.rectOfInterest = self.videoPreviewLayer!.metadataOutputRectConverted(fromLayerRect:
@@ -135,7 +135,7 @@ public class SwiftQRScanController: UIViewController {
             
             // metadataObjectTypes used to tell the app what kind of matadata we are intreated in. Here we want to do QR scan, so .qr is the right choice.
             if let _ = delegate {
-                captureMetadataOutput.metadataObjectTypes = delegate!.scanMetadataObjectTypes()
+                captureMetadataOutput.metadataObjectTypes = delegate!.scanMetadataObjectTypes(self)
             } else {
                 captureMetadataOutput.metadataObjectTypes = [.qr]
             }
@@ -181,7 +181,7 @@ extension SwiftQRScanController: AVCaptureMetadataOutputObjectsDelegate {
         // check if the metadata object is a QR Code
         
         if let _ = delegate {
-            if !delegate!.scanMetadataObjectTypes().contains(metadataObj.type) {
+            if !delegate!.scanMetadataObjectTypes(self).contains(metadataObj.type) {
                 return
             }
         } else if metadataObj.type != AVMetadataObject.ObjectType.qr {
@@ -196,7 +196,7 @@ extension SwiftQRScanController: AVCaptureMetadataOutputObjectsDelegate {
         if let result = metadataObj.stringValue {
             self.captureSession?.stopRunning()
             // output qr code
-            self.delegate?.scan(controller: self, result: result)
+            self.delegate?.scanController(self, didFinishScanWithInfo: result)
         }
     }
 }
