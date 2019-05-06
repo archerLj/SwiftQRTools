@@ -19,17 +19,18 @@ class ViewController: UIViewController {
 
 extension ViewController: SwiftQRScanControllerDelegate {
     
-    func scan(controller: SwiftQRScanController, result: String) {
-        print(result)
+    func scanController(_ controller: SwiftQRScanController, didFinishScanWithInfo info: String) {
+        print(info)
         controller.dismiss(animated: false, completion: nil)
     }
     
-    func scanMetadataObjectTypes() -> [AVMetadataObject.ObjectType] {
+    func scanMetadataObjectTypes(_ for: SwiftQRScanController) -> [AVMetadataObject.ObjectType] {
         return [.qr, .code128, .ean13, .ean8]
     }
     
     // SwiftQRScanViewConfig used to configure the interest rect.
-    func scanViewConfig() -> SwiftQRScanViewConfig {
+   func scanViewConfigure(_ for: SwiftQRScanController) -> SwiftQRScanViewConfig {
+        
         return SwiftQRScanViewConfig(colorExceptInterestRect: UIColor.init(white: 0, alpha: 0.8),
                                     interstRectWidth: 300.0,
                                     interstRectHeight: 100.0,
@@ -38,7 +39,8 @@ extension ViewController: SwiftQRScanControllerDelegate {
                                     InterestRectCornerLineWidth: 10)
     }
     
-    func scan(scanViewIn superView: UIView) -> SwiftQRScanView {
+    func scanView(_ for: SwiftQRScanController, in superView: UIView) -> SwiftQRScanView {
+    
         let scanView = ScanViewWithBack(frame: superView.bounds)
         scanView.delegate = self
         return scanView
