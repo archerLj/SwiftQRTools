@@ -92,7 +92,12 @@ public class SwiftQRUtils {
         // the generated CIImage is very small. we need to scale up it.
         let transform = CGAffineTransform(scaleX: imageScale, y: imageScale)
         let scaledQRImage = qrImage.transformed(by: transform)
-        return UIImage(ciImage: scaledQRImage)
+        
+        let context = CIContext()
+        guard let cgImage = context.createCGImage(scaledQRImage, from: scaledQRImage.extent) else {
+            return nil
+        }
+        return UIImage(cgImage: cgImage)
     }
     
     // clear background, white QR
@@ -140,12 +145,12 @@ public class SwiftQRUtils {
             return nil
         }
 
-        return UIImage(ciImage: outputCIImage)
-        //        let context = CIContext()
-        //        guard let cgImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else {
-        //            return nil
-        //        }
-        //        return UIImage(cgImage: cgImage)
+        
+        let context = CIContext()
+        guard let cgImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else {
+            return nil
+        }
+        return UIImage(cgImage: cgImage)
     }
     
     private static func changeImageColor(with image: UIImage, to color: UIColor) -> UIImage {
